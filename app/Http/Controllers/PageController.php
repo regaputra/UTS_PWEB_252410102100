@@ -8,12 +8,8 @@ use Illuminate\View\View;
 
 class PageController extends Controller
 {
-    public function login(Request $request): RedirectResponse|View
+    public function login(): View
     {
-        if ($request->session()->has('authenticated_username')) {
-            return redirect()->route('dashboard');
-        }
-
         return view('login', [
             'username' => '',
         ]);
@@ -59,7 +55,7 @@ class PageController extends Controller
             'nama' => 'Mahasiswa PWEB',
             'nim' => '252410102100',
             'peran' => 'Pengurus Organisasi',
-            'email' => 'rega@unej.ac.id',
+            'email' => '252410102100@unej.ac.id',
         ];
 
         return view('profile', compact('username', 'userData'));

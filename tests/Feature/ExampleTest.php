@@ -51,11 +51,13 @@ class ExampleTest extends TestCase
             ->assertRedirect(route('login'));
     }
 
-    public function test_authenticated_users_are_redirected_from_login_to_dashboard(): void
+    public function test_authenticated_users_can_open_login_page_before_entering_dashboard(): void
     {
         $this->withSession(['authenticated_username' => 'Rega'])
             ->get(route('login'))
-            ->assertRedirect(route('dashboard'));
+            ->assertOk()
+            ->assertSee('name="username"', false)
+            ->assertSee('Rega');
     }
 
     public function test_profile_displays_a_csrf_protected_logout_form(): void
@@ -85,6 +87,7 @@ class ExampleTest extends TestCase
         $this->withSession(['authenticated_username' => 'Rega'])
             ->get(route('dashboard'))
             ->assertOk()
+            ->assertSee('Rega')
             ->assertSee(route('pengelolaan'))
             ->assertSee(route('profile'));
     }
